@@ -1,0 +1,112 @@
+{% extends 'employees/base.html' %}
+
+{% block title %}
+Add Employee
+{% endblock %}
+
+{% block page_title %}
+Add Employee
+{% endblock %}
+
+{% block content %}
+
+<div class="card p-4">
+
+    <h5 class="mb-4">Add New Employee</h5>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        <div class="row g-3">
+
+            <div class="col-md-6">
+                <label class="form-label">Name</label>
+                <input
+                    type="text"
+                    name="name"
+                    class="form-control"
+                    required
+                >
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Email</label>
+                <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    required
+                >
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Phone</label>
+                <input
+                    type="text"
+                    name="phone"
+                    class="form-control"
+                    required
+                >
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Designation</label>
+                <input
+                    type="text"
+                    name="designation"
+                    class="form-control"
+                    required
+                >
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Salary</label>
+                <input
+                    type="number"
+                    name="salary"
+                    class="form-control"
+                    required
+                >
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Joining Date</label>
+                <input
+                    type="date"
+                    name="joining_date"
+                    class="form-control"
+                    required
+                >
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Department</label>
+
+                <select name="department" class="form-select" required>
+
+                    <option value="">Select Department</option>
+
+                    {% for department in departments %}
+
+                    <option value="{{ department.id }}">
+                        {{ department.name }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <button class="btn btn-dark mt-4">
+            Save Employee
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

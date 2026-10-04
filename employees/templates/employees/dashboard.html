@@ -1,0 +1,173 @@
+{% extends 'employees/base.html' %}
+
+{% block title %}
+Dashboard - Employee Management
+{% endblock %}
+
+{% block page_title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="row g-4">
+
+    <div class="col-md-3">
+          <div class="card p-4 dashboard-card">
+              <div class="dashboard-icon">
+              👥
+           </div>
+           <h6 class="dashboard-label">Total Employees</h6>
+           <h2 class="dashboard-number">{{ total_employees }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card p-4 dashboard-card">
+            <div class="dashboard-icon">
+               🏢
+           </div>
+            <h6 class="dashboard-label">Departments</h6>
+            <h2 class="dashboard-number">{{ total_departments }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card p-4 dashboard-card">
+            <div class="dashboard-icon">
+              💰
+            </div>
+            <h6 class="dashboard-label">Average Salary</h6>
+            <h2 class="dashboard-number">₹ {{ average_salary }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card p-4 dashboard-card">
+            <div class="dashboard-icon">
+               📈
+            </div>
+               <h6 class="dashboard-label">Highest Salary</h6>
+
+            {% if highest_salary %}
+
+                <h2 class="dashboard-number">₹ {{ highest_salary.salary }}</h2>
+
+                <p class="mb-0 text-muted">
+                    {{ highest_salary.name }}
+                </p>
+
+            {% else %}
+
+                <h2>₹ 0</h2>
+
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>
+
+
+<div class="card mt-4 p-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <div>
+
+            <h5 class="recent-title mb-1">
+                Recent Employees
+            </h5>
+
+            <small class="text-muted">
+                Latest employees added to the system
+            </small>
+
+        </div>
+
+        <a href="/employees/" class="btn btn-dark px-4">
+            View All
+        </a>
+
+    </div>
+
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle mb-0 employee-table">
+            <thead class="table-light">
+
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Designation</th>
+                    <th>Department</th>
+                    <th>Salary</th>
+                    <th>Joining Date</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            {% for employee in recent_employees %}
+
+                <tr>
+
+                    <td>
+                        <strong>
+                            {{ employee.name }}
+                        </strong>
+                    </td>
+
+                    <td>
+                        {{ employee.email }}
+                    </td>
+
+                    <td>
+                        {{ employee.designation }}
+                    </td>
+
+                    <td>
+
+                        <span class="badge bg-secondary">
+                            {{ employee.department.name }}
+                        </span>
+
+                    </td>
+
+                    <td>
+                        ₹ {{ employee.salary }}
+                    </td>
+
+                    <td>
+                        {{ employee.joining_date|date:"d M Y" }}
+                    </td>
+
+                </tr>
+
+
+            {% empty %}
+
+                <tr>
+
+                    <td colspan="6" class="text-center py-4">
+
+                        No employees found.
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

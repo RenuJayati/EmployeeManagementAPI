@@ -1,0 +1,137 @@
+{% extends 'employees/base.html' %}
+
+{% block title %}
+Employees - Employee Management
+{% endblock %}
+
+{% block page_title %}
+Employees
+{% endblock %}
+
+{% block content %}
+
+<div class="card p-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+        <h5 class="employee-page-title mb-1">
+            All Employees
+        </h5>
+
+        <small class="text-muted">
+    {{ employees|length }} employee{{ employees|length|pluralize }} found
+</small>
+
+        <small class="text-muted">
+            Manage employee records and information
+        </small>
+    </div>
+
+    <a href="/employees/add/" class="btn btn-dark px-4">
+        + Add Employee
+    </a>
+
+</div>
+
+    <form method="get" class="mb-4">
+
+    <div class="employee-search">
+
+        <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="Search employee by name..."
+            value="{{ request.GET.search }}"
+        >
+
+        <button class="btn btn-dark px-4" type="submit">
+            Search
+        </button>
+
+    </div>
+
+</form>
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle employee-list-table">
+
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Designation</th>
+                    <th>Department</th>
+                    <th>Salary</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            {% for employee in employees %}
+
+                <tr>
+
+                    <td>{{ employee.id }}</td>
+
+                    <td>
+                        <strong>{{ employee.name }}</strong>
+                    </td>
+
+                    <td>{{ employee.email }}</td>
+
+                    <td>{{ employee.designation }}</td>
+
+                    <td>
+                        <span class="department-badge">
+                            {{ employee.department.name }}
+                        </span>
+                    </td>
+
+                    <td>₹ {{ employee.salary }}</td>
+
+                    <td>
+                        <div class="d-flex gap-2">
+
+    <a
+        href="/employees/edit/{{ employee.id }}/"
+        class="btn btn-sm btn-outline-dark"
+    >
+        Edit
+    </a>
+
+    <a
+        href="/employees/delete/{{ employee.id }}/"
+        class="btn btn-sm btn-outline-danger"
+    >
+        Delete
+    </a>
+
+</div>
+                    </td>
+
+                </tr>
+
+            {% empty %}
+
+                <tr>
+                    <td colspan="7" class="text-center">
+                        No employees found.
+                    </td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}
